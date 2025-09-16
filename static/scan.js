@@ -1,3 +1,4 @@
+// Scan Page
 const scanPageContainer = document.createElement('div');
 scanPageContainer.id = 'scan-page';
 
@@ -60,14 +61,13 @@ const cubeColours = {
     'G': [135, 45, 25],
 };
 
-let faces = [];
+let faces = "";
 let currFace = [];
-const scanTurns = [3, 2, 3, 2, 3]
+const scanTurns = [3, 0, 2, 3, 1, 2, 2] // up (DON'T SCAN!), right, left, up, down (DONT'T SCAN!), left, left
 
 cubeFace.width = 180;
 cubeFace.height = 180;
 
-// maps colour chars to colour names
 const colourMap = {
   W: 'white',
   Y: 'yellow',
@@ -154,9 +154,9 @@ function rgbToHSV(r, g, b) {
     const d = max - min;
     let h, s, v = max;
     s = (max - min) / max;
-    rc = (max-r) / (max-min)
-    gc = (max-g) / (max-min)
-    bc = (max-b) / (max-min)
+    const rc = (max-r) / (max-min);
+    const gc = (max-g) / (max-min);
+    const bc = (max-b) / (max-min);
     if (r == max) h = 0.0+bc-gc;
     else if (g == max) h = 2.0+rc-bc;
     else h = 4.0+gc-rc;
@@ -175,7 +175,7 @@ function getHSVDistance(hsv1, hsv2) {
 function decodeFace() {
   let invalidImage = false;
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
   canvas.width = camVideo.videoWidth;
   canvas.height = camVideo.videoHeight;
 
@@ -288,7 +288,7 @@ async function slideArrow(dir) {
     const S = 0.3*Math.min(W, H);
 
     const arrow = new Image();
-    arrow.src = '/imgs/arrow.png';
+    arrow.src = 'static/imgs/arrow.png';
     Object.assign(arrow.style, {
       position: 'absolute',
       width: `${S}px`,
@@ -329,11 +329,11 @@ async function slideArrow(dir) {
     videoContainer.appendChild(arrow);
 
     const duration = 600;
-    const t0 = performance.now();
+    const startTime = performance.now();
     let i = 0;
     function animate(now) {
       i+=0.03;
-      const t = Math.min(1, (now - t0) / duration);
+      const t = Math.min(1, (now - startTime) / duration);
       const x = startX + (endX - startX) * t;
       const y = startY + (endY - startY) * t;
 
@@ -355,18 +355,15 @@ async function slideArrow(dir) {
 function getButtonPress() {
   return new Promise((resolve) => {
     function onTryAgain() {
-      cleanup();
+      tryAgainBtn.removeEventListener('click', onTryAgain);
+      nextFaceBtn.removeEventListener('click', onNextFace);
       resolve({ action: 'tryAgain' });
     }
 
     function onNextFace() {
-      cleanup();
-      resolve({ action: 'nextFace' });
-    }
-
-    function cleanup() {
       tryAgainBtn.removeEventListener('click', onTryAgain);
       nextFaceBtn.removeEventListener('click', onNextFace);
+      resolve({ action: 'nextFace' });
     }
 
     tryAgainBtn.addEventListener('click', onTryAgain);
@@ -374,7 +371,7 @@ function getButtonPress() {
   });
 }
 
-window.onload = async function() {
+export async function scanCube() {
   await startCamera();
   await new Promise(resolve => {
       camVideo.addEventListener('loadedmetadata', resolve, { once: true });
@@ -383,6 +380,7 @@ window.onload = async function() {
   await new Promise(r => setTimeout(r, 100));
 
   // scan each cube face
+  let j = 0;
   for (let i = 0; i < 6; i++) {
     resetCubeFace();
     while (true) {
@@ -396,10 +394,20 @@ window.onload = async function() {
       i--;
     }
     else if (choice.action == 'nextFace') {
-      faces.push(currFace);
-      slideArrow(scanTurns[i]);
+      faces += currFace.join('');
+      if (i == 5) continue;
+      slideArrow(scanTurns[j++]);
+      if (i == 0) {
+        await new Promise(r => setTimeout(r, 1000));
+        slideArrow(scanTurns[++j]);
+      }
+      else if (i == 3) {
+        await new Promise(r => setTimeout(r, 1000));
+        slideArrow(scanTurns[++j]);
+      }
     }
 
   }
-  console.log("All faces scanned.");
+  scanPageContainer.remove();
+  return faces;
 }

@@ -1,23 +1,23 @@
 @font-face {
     font-family: oxanium-regular;
-    src: url(/oxanium/Oxanium-Regular.ttf);
+    src: url(/static/oxanium/Oxanium-Regular.ttf);
     font-weight: 400;
 }
 
 @font-face {
     font-family: oxanium-bold;
-    src: url(/oxanium/Oxanium-Bold.ttf);
+    src: url(/static/oxanium/Oxanium-Bold.ttf);
     font-weight: 700;
 }
 
 @font-face {
     font-family: oxanium-extra-bold;
-    src: url(/oxanium/Oxanium-ExtraBold.ttf);
+    src: url(/static/oxanium/Oxanium-ExtraBold.ttf);
     font-weight: 800;
 }
 
 body {
-    background-color: white;
+    background-color: rgb(235, 235, 235);
     color: rgb(30, 30, 30);
     margin: auto;
     width: 380px;
@@ -40,6 +40,7 @@ body {
     text-align: center;
 }
 
+/* SCAN.JS */
 #cam-video {
     margin: auto;
     text-align: center;
@@ -96,4 +97,36 @@ body {
 
 #next-face-btn {
     background-color: #66BB6A;
+}
+
+/* SOLVE.JS */
+.rubiks-move-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+    font-family: system-ui;
+}
+
+.rubiks-token {
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #111;
+    border: 1px solid rgba(0,0,0,0.08);
+    min-width: 28px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.rubiks-token.active {
+    background: linear-gradient(180deg,#ffd966,#ffb84d);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+.rubiks-token.done {
+    opacity: 0.45;
+    transform: none;
+    background: #e8e8e8;
 }
