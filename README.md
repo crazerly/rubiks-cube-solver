@@ -5,8 +5,8 @@ A webapp to easily scan and solve your 3x3 Rubik's cube.
 1. Clone the script:
 
 ```bash
-git clone https://github.com/crazerly/Wordle-Game-and-Bot.git
-cd Wordle-Game-and-Bot
+git clone https://github.com/crazerly/rubiks-cube-solver.git
+cd rubiks-cube-solver
 ```
 
 2. Install flask and flask-cors:
@@ -18,7 +18,7 @@ cd Wordle-Game-and-Bot
 3. Run the bot:
 
 ```bash
-python wordle_bot.py
+python solve_cube.py
 ```
 
 4. Open the website in your browser:
