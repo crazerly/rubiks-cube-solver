@@ -29,11 +29,14 @@ http://127.0.0.1:5000/
 
 ## How to Use
 
+### Scanning
 First, orient the cube so the white face is in front of the camera and the blue face is on top.
 You must follow the arrows to scan each face correctly, in the order: white, red, green, yellow, orange, blue.  
-Hold the cube up to the camera so that each 'cubie' aligns with a square on the grid overlay, as shown below.
+Hold the cube up to the camera so that each 'cubie' aligns with a square on the grid overlay, as shown below:
+
 <img src="https://github.com/crazerly/rubiks-cube-solver/blob/main/static/imgs/example.png?raw=true" width="600" />
 
+### Solving
 The program can normally colour the face correctly, but I have found the accuracy varies based on brightness, colour of cube's stickers, etc.  
 If cubies are incorrect, you can change them using the paint tool.
 **However, the colour picker won't work if the progam hasn't detected a face yet.**  
