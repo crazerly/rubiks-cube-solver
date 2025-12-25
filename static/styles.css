@@ -1,0 +1,139 @@
+@font-face {
+    font-family: oxanium-regular;
+    src: url(/static/oxanium/Oxanium-Regular.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: oxanium-bold;
+    src: url(/static/oxanium/Oxanium-Bold.ttf);
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: oxanium-extra-bold;
+    src: url(/static/oxanium/Oxanium-ExtraBold.ttf);
+    font-weight: 800;
+}
+
+body {
+    background-color: rgb(235, 235, 235);
+    color: rgb(30, 30, 30);
+    margin: auto;
+    width: 380px;
+    height: 834px;
+
+}
+
+#title {
+    font-family: 'oxanium-extra-bold', sans-serif;
+    font-size: 40px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#credit {
+    font-family: 'oxanium-regular', sans-serif;
+    font-size: 25px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#instructions {
+    font-family: 'oxanium-regular', sans-serif;
+    font-size: 15px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* SCAN.JS */
+#cam-video {
+    margin: auto;
+    text-align: center;
+}
+
+#scan-page {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+#grid-overlay {
+    position: absolute;
+    pointer-events: none;
+}
+
+#cube-face-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#colour-palette {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+#button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+#try-again-btn, #next-face-btn {
+    color: white;
+    font-size: 16px;
+    width: 100px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 5%;
+    border: 0px;
+}
+
+#try-again-btn {
+    background-color: #EF5350;
+}
+
+#next-face-btn {
+    background-color: #66BB6A;
+}
+
+/* SOLVE.JS */
+.rubiks-move-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+    font-family: system-ui;
+}
+
+.rubiks-token {
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #111;
+    border: 1px solid rgba(0,0,0,0.08);
+    min-width: 28px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.rubiks-token.active {
+    background: linear-gradient(180deg,#ffd966,#ffb84d);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+.rubiks-token.done {
+    opacity: 0.45;
+    transform: none;
+    background: #e8e8e8;
+}
